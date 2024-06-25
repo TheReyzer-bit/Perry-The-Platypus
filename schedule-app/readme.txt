@@ -27,3 +27,11 @@ schedule-app/
 │   └── ...
 ├── .gitignore
 └── README.md
+
+cd C:\Users\admin\Documents\schedule-app\backend
+npm install
+node app.js
+
+cd C:\Users\admin\Documents\schedule-app\frontend
+npm install
+npm start
