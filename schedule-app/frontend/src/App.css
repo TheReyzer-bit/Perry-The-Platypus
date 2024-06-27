@@ -1,0 +1,17 @@
+.container {
+  margin-top: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+button {
+  margin-top: 5px;
+}
