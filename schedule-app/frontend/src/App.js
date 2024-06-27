@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import TeacherPage from './pages/TeacherPage'; // Замените на импорт страницы учителя
-import StudentPage from './pages/StudentPage'; // Замените на импорт страницы студента
-import AdminPage from './pages/AdminPage'; // Замените на импорт страницы администратора
+import SchedulePage from './pages/SchedulePage';
 
 const App = () => {
+  const [editMode, setEditMode] = useState(false);
+
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/teacher" element={<TeacherPage />} />
-        <Route path="/student" element={<StudentPage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/schedule" element={<SchedulePage editMode={editMode} setEditMode={setEditMode} />} />
       </Routes>
     </Router>
   );

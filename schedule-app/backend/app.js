@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const sequelize = require('./config/database');
 const User = require('./models/user');
 const cors = require('cors'); // Убедитесь, что у вас установлен пакет cors
@@ -34,3 +34,30 @@ async function initialize() {
 }
 
 initialize();
+*/
+// backend/app.js
+
+// backend/app.js
+
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/connectDB');
+const authRoutes = require('./routes/authRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
+
+const app = express();
+
+// Middleware
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/schedule', scheduleRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  connectDB();
+});
