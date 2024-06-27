@@ -1,40 +1,19 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { TeacherPage, StudentPage, AdminPage } from './pages';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import './App.css';
+import TeacherPage from './pages/TeacherPage'; // Замените на импорт страницы учителя
+import StudentPage from './pages/StudentPage'; // Замените на импорт страницы студента
+import AdminPage from './pages/AdminPage'; // Замените на импорт страницы администратора
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState('');
-
-  const handleLogin = (role) => {
-    setIsAuthenticated(true);
-    setRole(role);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setRole('');
-  };
-
   return (
     <Router>
-      <div>
-        <Routes>
-          {!isAuthenticated ? (
-            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-          ) : (
-            <>
-              {role === 'admin' && <Route path="/admin" element={<AdminPage onLogout={handleLogout} />} />}
-              {role === 'teacher' && <Route path="/teacher" element={<TeacherPage onLogout={handleLogout} />} />}
-              {role === 'student' && <Route path="/student" element={<StudentPage onLogout={handleLogout} />} />}
-              <Route path="/" element={<Navigate to={`/${role}`} />} />
-            </>
-          )}
-          <Route path="*" element={<Navigate to={isAuthenticated ? `/${role}` : '/login'} />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/teacher" element={<TeacherPage />} />
+        <Route path="/student" element={<StudentPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
     </Router>
   );
 };
