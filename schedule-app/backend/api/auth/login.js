@@ -1,5 +1,4 @@
 // backend/login.js
-
 const express = require('express');
 const router = express.Router();
 
@@ -18,13 +17,12 @@ router.post('/login', (req, res) => {
   const user = users.find(u => u.login === login);
 
   // Проверка пароля
-  if (user && password === user.password) {
-    // В случае успеха возвращаем успешный статус и данные пользователя
-    return res.status(200).json({ id: user.id, login: user.login, role: user.role });
-  } else {
-    // В случае ошибки возвращаем статус 401 (Unauthorized)
-    return res.status(401).json({ message: 'Invalid credentials' });
-  }
+ if (user && password === user.password) {
+  return res.status(200).json({ id: user.id, login: user.login, role: user.role });
+} else {
+  return res.status(401).json({ message: 'Invalid credentials' });
+}
+
 });
 
 module.exports = router;
