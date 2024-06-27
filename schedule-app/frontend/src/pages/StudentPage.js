@@ -1,10 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
+import ScheduleTable from '../components/ScheduleTable';
 
-const StudentPage = () => {
+const StudentPage = ({ onLogout }) => {
   return (
-    <div>
-      <h1>Student Page</h1>
-      {/* Your content here */}
+    <div className="container">
+      <Header onLogout={onLogout} />
+      <h2>Student Schedule</h2>
+      <ScheduleTable />
     </div>
   );
 };
