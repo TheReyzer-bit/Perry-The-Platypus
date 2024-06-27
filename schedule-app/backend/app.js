@@ -1,22 +1,36 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const scheduleRoutes = require('./routes/schedule');
-
+const sequelize = require('./config/database');
+const User = require('./models/user');
+const cors = require('cors'); // Убедитесь, что у вас установлен пакет cors
 const app = express();
 
-app.use(bodyParser.json());
+// Используйте cors middleware
 app.use(cors());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/schedule', scheduleRoutes);
+// Другие настройки и маршруты
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Пример обработчика POST запроса для /api/auth/login
+app.post('/api/auth/login', (req, res) => {
+  // Логика аутентификации
+  res.status(200).json({ message: 'Login successful' });
 });
+async function initialize() {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+
+    // Синхронизация моделей с базой данных
+    await sequelize.sync({ alter: true }); // или force: true для пересоздания таблиц
+
+    // Дополнительные настройки и маршруты Express
+    // app.use(...);
+
+    app.listen(5000, () => {
+      console.log('Server is running on http://localhost:5000');
+    });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+initialize();

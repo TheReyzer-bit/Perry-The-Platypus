@@ -1,57 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ScheduleTable = ({ isEditMode }) => {
-  // Пример данных расписания
-  const [schedule, setSchedule] = useState([
-    { day: 'Monday', time: '08:00', group: 'Group 1', subject: 'Math' },
-    { day: 'Tuesday', time: '10:00', group: 'Group 2', subject: 'Physics' },
-    // Добавьте другие данные расписания здесь
-  ]);
+const ScheduleTable = () => {
+  const [schedule, setSchedule] = useState([]);
 
-  const renderTable = () => {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    return days.map(day => (
-      <tr key={day}>
-        <th>{day}</th>
-        {schedule
-          .filter(item => item.day === day)
-          .map((item, index) => (
-            <td key={index}>
-              {item.time} - {item.group} - {item.subject}
-              {isEditMode && (
-                <div>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </div>
-              )}
-            </td>
-          ))}
-      </tr>
-    ));
+  useEffect(() => {
+    fetchSchedule();
+  }, []);
+
+  const fetchSchedule = async () => {
+    try {
+      const response = await axios.get('/api/schedule');
+      setSchedule(response.data);
+    } catch (error) {
+      console.error('Error fetching schedule:', error);
+    }
   };
 
   return (
     <div>
-      <div className="filters">
-        <select>
-          <option>Group 1</option>
-          <option>Group 2</option>
-          {/* Добавьте другие группы здесь */}
-        </select>
-        <select>
-          <option>Teacher 1</option>
-          <option>Teacher 2</option>
-          {/* Добавьте других преподавателей здесь */}
-        </select>
-      </div>
-      <table className="table">
+      <h2>Schedule</h2>
+      <table>
         <thead>
           <tr>
-            <th>Day</th>
-            <th>Schedule</th>
+            <th>Weekday</th>
+            <th>Date</th>
+            <th>Time Start</th>
+            <th>Subject</th>
+            <th>Group</th>
+            <th>Teacher</th>
           </tr>
         </thead>
-        <tbody>{renderTable()}</tbody>
+        <tbody>
+          {schedule.map(item => (
+            <tr key={item.id}>
+              <td>{item.weekday}</td>
+              <td>{item.date}</td>
+              <td>{item.time_start}</td>
+              <td>{item.subject}</td>
+              <td>{item.id_group}</td>
+              <td>{item.id_teacher}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

@@ -1,6 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
+// Пример маршрута
+router.get('/', (req, res) => {
+  res.send('GET request to /api/schedule');
+});
+
+module.exports = router;
+
+
+/*
+const express = require('express');
+const router = express.Router();
+
 // Example schedule data
 let schedules = [];
 
@@ -49,3 +61,4 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+*/

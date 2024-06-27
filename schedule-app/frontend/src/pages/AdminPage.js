@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import ScheduleTable from '../components/ScheduleTable';
 
-const AdminPage = ({ onLogout }) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-  };
-
+const AdminPage = () => {
   return (
-    <div className="container">
-      <Header onLogout={onLogout} />
-      <h2>Admin Schedule</h2>
-      <button className="btn btn-secondary" onClick={toggleEditMode}>
-        {isEditMode ? 'View Mode' : 'Edit Mode'}
-      </button>
-      <ScheduleTable isEditMode={isEditMode} />
+    <div>
+      <h2>Admin Page</h2>
+      <ScheduleTable />
+
+      {/* Добавление кнопок и действий для редактирования */}
+      <Link to="/edit-mode">Switch to Edit Mode</Link>
+      {/* Другие кнопки и действия */}
     </div>
   );
 };
